@@ -1,3 +1,4 @@
+cordova.define("cordova-plugin-http.CordovaHttpPlugin", function(require, exports, module) {
 /*global angular*/
 
 /*
@@ -54,6 +55,16 @@ var http = {
         headers = mergeHeaders(this.headers, headers);
         return exec(success, failure, "CordovaHttpPlugin", "postJson", [url, json, headers]);
     },
+    // 17.01.18 new //
+    Delete: function(url, json, headers, success, failure) {
+        headers = mergeHeaders(this.headers, headers);
+        return exec(success, failure, "CordovaHttpPlugin", "Delete", [url, json, headers]);
+    },
+    Patch: function(url, json, headers, success, failure) {
+        headers = mergeHeaders(this.headers, headers);
+        return exec(success, failure, "CordovaHttpPlugin", "Patch", [url, json, headers]);
+    },
+    // 17.01.18 new End //
     get: function(url, params, headers, success, failure) {
         headers = mergeHeaders(this.headers, headers);
         return exec(success, failure, "CordovaHttpPlugin", "get", [url, params, headers]);
@@ -162,6 +173,14 @@ if (typeof angular !== "undefined") {
             postJson: function(url, json, headers) {
                 return makePromise(http.postJson, [url, json, headers], true);
             },
+            // 17.01.18 new //
+            Delete: function(url, json, headers) {
+                return makePromise(http.Delete, [url, json, headers], true);
+            },
+            Patch: function(url, json, headers) {
+                return makePromise(http.Patch, [url, json, headers], true);
+            },
+            // 17.01.18 new End //
             get: function(url, params, headers) {
                 return makePromise(http.get, [url, params, headers], true);
             },
@@ -180,3 +199,5 @@ if (typeof angular !== "undefined") {
 } else {
     window.cordovaHTTP = http;
 }
+
+});
